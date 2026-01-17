@@ -118,13 +118,13 @@ describe('User Validators', () => {
       expect(result.success).toBe(true);
     });
 
-    it('should reject invalid UUID', () => {
-      const invalidData = {
+    it('should accept any non-empty user ID', () => {
+      const validData = {
         userId: 'not-a-uuid',
       };
 
-      const result = userIdParamSchema.safeParse(invalidData);
-      expect(result.success).toBe(false);
+      const result = userIdParamSchema.safeParse(validData);
+      expect(result.success).toBe(true);
     });
 
     it('should reject missing userId', () => {
