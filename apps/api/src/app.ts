@@ -3,6 +3,10 @@ import 'express-async-errors';
 import helmet from 'helmet';
 import cors from 'cors';
 import userRoutes from './routes/user.routes';
+import feedRoutes from './routes/feed.routes';
+import notificationRoutes from './routes/notification.routes';
+import subscriptionRoutes from './routes/subscription.routes';
+import { analyticsMiddleware } from './middleware/analytics.middleware';
 import { logger } from './utils/logger';
 
 const app: Application = express();
@@ -11,6 +15,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(analyticsMiddleware);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   logger.info('Incoming request', {
@@ -26,6 +31,9 @@ app.get('/health', (req: Request, res: Response) => {
 });
 
 app.use('/users', userRoutes);
+app.use('/feed', feedRoutes);
+app.use('/notifications', notificationRoutes);
+app.use('/subscriptions', subscriptionRoutes);
 
 app.use((req: Request, res: Response) => {
   res.status(404).json({ error: 'Route not found' });

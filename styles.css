@@ -42,6 +42,81 @@ li {
     margin-bottom: 0.5rem;
 }
 
+.hidden {
+    display: none;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 1rem;
+}
+
+#auth-btn {
+    background: #fff;
+    color: #333;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+}
+
+#services-section {
+    grid-column: span 2;
+}
+
+.service-hub {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.service-card {
+    background: #333;
+    color: #fff;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.service-card:hover {
+    background: #555;
+}
+
+.badge {
+    background: #007bff;
+    color: #fff;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+}
+
+.feed-item, .notification-item {
+    border-bottom: 1px solid #eee;
+    padding: 0.5rem 0;
+}
+
+.feed-item:last-child, .notification-item:last-child {
+    border-bottom: none;
+}
+
 footer {
     text-align: center;
     padding: 1rem 0;
