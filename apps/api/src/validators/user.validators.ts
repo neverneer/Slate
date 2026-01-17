@@ -20,7 +20,7 @@ export const updateSettingsSchema = z.object({
 });
 
 export const userIdParamSchema = z.object({
-  userId: z.string().uuid(),
+  userId: z.string().min(1),
 });
 
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;

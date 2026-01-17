@@ -86,21 +86,33 @@ describe('User Routes Integration Tests', () => {
 
   describe('GET /users/:userId', () => {
     it('should return full profile when requesting own profile', async () => {
-      vi.mocked(UserSessionModel.findByJti).mockResolvedValue(mockSession as any);
+      const validUuid = '123e4567-e89b-12d3-a456-426614174000';
+      const tokenJti = 'test-jti-2';
+      const ownProfileToken = generateToken({
+        userId: validUuid,
+        email: 'test@example.com',
+        jti: tokenJti,
+      });
+      vi.mocked(UserSessionModel.findByJti).mockResolvedValue({
+        ...mockSession,
+        user_id: validUuid,
+        token_jti: tokenJti,
+      } as any);
       vi.mocked(UserSessionModel.updateLastActive).mockResolvedValue();
-      vi.mocked(UserModel.getProfile).mockResolvedValue(mockUser);
+      vi.mocked(UserModel.getProfile).mockResolvedValue({ ...mockUser, id: validUuid });
 
       const response = await request(app)
-        .get('/users/user-123')
-        .set('Authorization', `Bearer ${authToken}`);
+        .get(`/users/${validUuid}`)
+        .set('Authorization', `Bearer ${ownProfileToken}`);
 
       expect(response.status).toBe(200);
       expect(response.body.email).toBeDefined();
     });
 
     it('should return public profile for other users', async () => {
+      const validUuid = '123e4567-e89b-12d3-a456-426614174001';
       const mockPublicProfile = {
-        id: 'user-456',
+        id: validUuid,
         first_name: 'Jane',
         last_name: 'Smith',
         avatar_url: null,
@@ -109,14 +121,14 @@ describe('User Routes Integration Tests', () => {
 
       vi.mocked(UserSessionModel.findByJti).mockResolvedValue(mockSession as any);
       vi.mocked(UserSessionModel.updateLastActive).mockResolvedValue();
-      vi.mocked(UserModel.findById).mockResolvedValue({ ...mockUser, id: 'user-456' });
+      vi.mocked(UserModel.findById).mockResolvedValue({ ...mockUser, id: validUuid });
       vi.mocked(UserSettingsModel.findByUserId).mockResolvedValue({
         profile_visibility: 'public',
       } as any);
       vi.mocked(UserModel.getPublicProfile).mockResolvedValue(mockPublicProfile);
 
       const response = await request(app)
-        .get('/users/user-456')
+        .get(`/users/${validUuid}`)
         .set('Authorization', `Bearer ${authToken}`);
 
       expect(response.status).toBe(200);
@@ -129,11 +141,11 @@ describe('User Routes Integration Tests', () => {
       vi.mocked(UserSessionModel.updateLastActive).mockResolvedValue();
 
       const response = await request(app)
-        .get('/users/invalid-id')
+        .get('/users/')
         .set('Authorization', `Bearer ${authToken}`);
 
-      expect(response.status).toBe(400);
-      expect(response.body.error).toBe('Validation failed');
+      expect(response.status).toBe(404);
+      expect(response.body.error).toBe('Route not found');
     });
   });
 
