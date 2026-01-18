@@ -5,15 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slate - One Surface for Everything</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <header>
-        <h1>Slate</h1>
+        <div class="header-content">
+            <h1>Slate</h1>
+            <nav id="main-nav">
+                <a href="#" id="nav-home">Home</a>
+                <a href="#" id="nav-dashboard" class="hidden">Dashboard</a>
+                <button id="auth-btn">Sign In</button>
+            </nav>
+        </div>
         <p>One Surface for Everything</p>
     </header>
 
-    <main>
-        <section id="mission">
+    <main id="content">
+        <div id="landing-page">
+            <section id="mission">
             <h2>Mission</h2>
             <p>Slate exists to unify digital life. Our mission is to replace fragmented apps, accounts, subscriptions, and services with one seamless, secure, and globally accessible surface. Slate empowers individuals and businesses to interact, create, play, work, and trade without friction.</p>
             <p>We are building the foundational layer of the modern internet experience.</p>
@@ -141,6 +150,22 @@
             </ul>
         </section>
 
+        <section id="faq">
+            <h2>FAQ</h2>
+            <div class="faq-item">
+                <h4>What is Slate?</h4>
+                <p>Slate is a unified platform that integrates identity, communication, storage, and entertainment into one seamless experience.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Is my data secure?</h4>
+                <p>Yes, we use end-to-end encryption and decentralized identity keys to ensure your data remains yours.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How much does it cost?</h4>
+                <p>Slate offers a generous free tier, with premium options for power users and developers.</p>
+            </div>
+        </section>
+
         <section id="business-model">
             <h2>Business Model</h2>
             <ul>
@@ -150,6 +175,42 @@
                 <li><strong>Enterprise tier:</strong> Business and integration solutions</li>
             </ul>
         </section>
+        </div>
+
+        <div id="dashboard" class="hidden">
+            <section id="dashboard-header">
+                <h2>Welcome back, <span id="user-name">User</span></h2>
+                <div class="user-info">
+                    <span class="badge" id="user-tier">Free Tier</span>
+                </div>
+            </section>
+
+            <div class="dashboard-grid">
+                <section id="feed-section">
+                    <h3>Home Feed</h3>
+                    <div id="feed-items">
+                        <p>Loading feed...</p>
+                    </div>
+                </section>
+
+                <section id="notifications-section">
+                    <h3>Notifications</h3>
+                    <div id="notification-items">
+                        <p>Loading notifications...</p>
+                    </div>
+                </section>
+
+                <section id="services-section">
+                    <h3>Services</h3>
+                    <div class="service-hub">
+                        <div class="service-card">Slate ID</div>
+                        <div class="service-card">Slate Vault</div>
+                        <div class="service-card">Slate Pay</div>
+                        <div class="service-card">Slate Stream</div>
+                    </div>
+                </section>
+            </div>
+        </div>
     </main>
 
     <footer>
